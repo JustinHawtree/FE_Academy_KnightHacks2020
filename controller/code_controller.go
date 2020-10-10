@@ -101,21 +101,19 @@ func RunCode(c *fiber.Ctx) error {
 func GetCode(c *fiber.Ctx) error {
 
 	return c.JSON(fiber.Map{"problem":
-	 	`#include <stdlib.h>
-		#include <stdio.h>
+`#include <stdlib.h>
+#include <stdio.h>
+typedef struct node {
+	int data;
+	struct node* next, *prev;
+} node;
 		 
-		 
-		typedef struct node {
-			int data;
-			struct node* next, *prev;
-		} node;
-		 
-		typedef struct queue {
-			int size;
-			struct node *head, *tail;
-		} queue;
+typedef struct queue {
+	int size;
+	struct node *head, *tail;
+} queue;
 		
-		int dequeue(queue*thisQ) {
+int dequeue(queue*thisQ) {
 			
 			
 			
@@ -126,5 +124,5 @@ func GetCode(c *fiber.Ctx) error {
 			
 			
 		
-		}`})
+}`})
 }

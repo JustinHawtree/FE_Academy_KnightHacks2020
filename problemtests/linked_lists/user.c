@@ -21,7 +21,7 @@ int dequeue (queue *thisQ) {
     return 0;
   }
 
-  //int retval = thisQ->head->data;
+  int retval = thisQ->head->data;
 
   node *temp = thisQ->head;
 
@@ -36,5 +36,5 @@ int dequeue (queue *thisQ) {
 
   thisQ->size--;
 
-  return 0;
+  return retval;
 }
