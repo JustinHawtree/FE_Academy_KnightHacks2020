@@ -6,6 +6,7 @@ import (
 	"FoundationHelper_KnightHacks2020/config"
 	"FoundationHelper_KnightHacks2020/routes"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"log"
@@ -28,6 +29,10 @@ func Serve() {
 	// Middleware
 	app.App.Use(recover.New())
 	app.App.Use(logger.New())
+	app.App.Use(cors.New(cors.Config{
+		AllowOrigins: "http://localhost:3000",
+		AllowHeaders: "Origin, Content-Type, Accept",
+	}))
 
 	// Load in the http routes
 	routes.Load()
