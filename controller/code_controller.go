@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"strings"
 	"sync"
 	"time"
 )
@@ -30,7 +31,7 @@ func (s *SyncBuf) Reset() {
 func (s *SyncBuf) String() string {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	log.Println("Buff Length:", s.buf.Len())
+	//log.Println("Buff Length:", s.buf.Len())
 	if s.buf.Len() > 10000 {
 		s.overflow = true
 		s.buf.Truncate(10000)
@@ -56,7 +57,7 @@ func RunCode(c *fiber.Ctx) error {
 	}
 	//log.Println(userCode.Input)
 
-	f, fileErr := os.Create("./problemtests/linked_lists/user.c")
+	f, fileErr := os.Create("./testproblems/linked_lists/testuser.c")
 	if fileErr != nil {
 		return c.Status(500).SendString(fileErr.Error())
 	}
@@ -70,7 +71,7 @@ func RunCode(c *fiber.Ctx) error {
 	defer cancel()
 
 	cmd := exec.CommandContext(ctx, "bash", "runTest.sh")
-	cmd.Dir = "problemtests/linked_lists/"
+	cmd.Dir = "testproblems/linked_lists/"
 
 	var buf SyncBuf
 	cmd.Stdout = &buf
@@ -78,12 +79,15 @@ func RunCode(c *fiber.Ctx) error {
 	err := cmd.Run()
 
 	if err != nil {
-		log.Println("Timed out?")
 		log.Println(err.Error())
 		var errOutput string
 		if err.Error() == "exit status 1" {
 			errOutput = buf.String()
+			if strings.Contains(errOutput, "Segmentation fault") {
+				errOutput = "Segmentation Fault: You likely forgot to check for NULL"
+			}
 		} else {
+			log.Println("Timed out?")
 			errOutput = "Process Timed Out (Code exceeded 3 Seconds)"
 		}
 		buf.Reset()

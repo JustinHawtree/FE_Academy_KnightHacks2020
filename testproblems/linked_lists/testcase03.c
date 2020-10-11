@@ -3,6 +3,10 @@
 #include "linked.h"
 
 
+char* getInput() {
+  return "Input: NULL <-> [5] <-> [4] <-> [3] <-> [2] <-> [1] <-> NULL";
+}
+
 int main(void) {
   int array[5] = {5, 4, 3, 2, 1};
   queue* q = createQueue(array, 5);

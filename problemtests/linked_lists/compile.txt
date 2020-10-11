@@ -1,6 +1,0 @@
-/tmp/cc1kOMsN.o: In function `main':
-testcase01.c:(.text+0x14a): multiple definition of `main'
-/tmp/ccgzAJNB.o:user.c:(.text+0x0): first defined here
-/tmp/cc1kOMsN.o: In function `main':
-testcase01.c:(.text+0x158): undefined reference to `dequeue'
-collect2: error: ld returned 1 exit status
