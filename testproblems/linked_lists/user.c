@@ -13,9 +13,9 @@ typedef struct queue {
 
 
 int dequeue (queue *thisQ) {
-  // if (thisQ == NULL) {
-  //   return 0;
-  // }
+  if (thisQ == NULL) {
+    return 0;
+  }
 
   if (thisQ->size == 0) {
     return 0;
@@ -34,7 +34,7 @@ int dequeue (queue *thisQ) {
 
   free(temp);
 
-  //thisQ->size--;
+  thisQ->size--;
 
   return retval;
 }

@@ -13,11 +13,11 @@ run_unit_test()
   fi
 
   # We need to capture the shell error too since segmentation fault is caused by the shell running the command ./a.out
-  { ./a.out; } > output.txt 2> err.txt
+  { ./a.out; } > output.txt 2>&1
   execution_val=$?
   if [[ $execution_val != 0 ]]; then
-    cat_err_file=`cat err.txt`
-    echo "$cat_err_file"
+    cat_output_file=`cat output.txt`
+    echo "$cat_output_file"
     #echo "execution $testcase_file"
     exit 1
   fi
