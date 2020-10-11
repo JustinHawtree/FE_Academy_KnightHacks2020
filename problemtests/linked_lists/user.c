@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
 typedef struct node {
   int data;
   struct node* next, *prev;
@@ -11,6 +10,7 @@ typedef struct queue {
   int size;
   struct node *head, *tail;
 } queue;
+
 
 int dequeue (queue *thisQ) {
   if (thisQ == NULL) {
