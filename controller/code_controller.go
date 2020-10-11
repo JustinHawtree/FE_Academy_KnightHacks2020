@@ -1,9 +1,9 @@
 package controller
 
 import (
+	"FoundationHelper_KnightHacks2020/model"
 	"bytes"
 	"context"
-	"FoundationHelper_KnightHacks2020/model"
 	"github.com/gofiber/fiber/v2"
 	"log"
 	"os"
@@ -56,7 +56,7 @@ func RunCode(c *fiber.Ctx) error {
 	}
 	//log.Println(userCode.Input)
 
-	f, fileErr := os.Create("hello.c")
+	f, fileErr := os.Create("./problemtests/linked_lists/user.c")
 	if fileErr != nil {
 		return c.Status(500).SendString(fileErr.Error())
 	}
@@ -65,28 +65,30 @@ func RunCode(c *fiber.Ctx) error {
 		return c.Status(500).SendString(writeErr.Error())
 	}
 
-	cmd := exec.Command("gcc", "hello.c")
-	out, err := cmd.CombinedOutput()
-
-	if err != nil {
-		return c.Status(400).JSON(fiber.Map{"error": string(out)})
-	}
-
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	// Limit the bash script to only run for 3 seconds
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	cmd = exec.CommandContext(ctx, "./a.out")
+	cmd := exec.CommandContext(ctx, "bash", "runTest.sh")
+	cmd.Dir = "problemtests/linked_lists/"
+
 	var buf SyncBuf
 	cmd.Stdout = &buf
 
-	err = cmd.Run()
+	err := cmd.Run()
 
 	if err != nil {
 		log.Println("Timed out?")
-		//log.Println(buf.String())
+		log.Println(err.Error())
+		var errOutput string
+		if err.Error() == "exit status 1" {
+			errOutput = buf.String()
+		} else {
+			errOutput = "Process Timed Out (Code exceeded 3 Seconds)"
+		}
 		buf.Reset()
 		buf = SyncBuf{}
-		return c.Status(400).JSON(fiber.Map{"error": "Process Timed Out (Code exceeded 3 Seconds)"})
+		return c.Status(400).JSON(fiber.Map{"error": errOutput})
 	}
 
 	done := time.Now()
@@ -97,11 +99,10 @@ func RunCode(c *fiber.Ctx) error {
 	return c.JSON(result)
 }
 
-
+// GetCode Function to get problem
 func GetCode(c *fiber.Ctx) error {
 
-	return c.JSON(fiber.Map{"problem":
-`#include <stdlib.h>
+	return c.JSON(fiber.Map{"problem": `#include <stdlib.h>
 #include <stdio.h>
 
 typedef struct node {
@@ -115,7 +116,6 @@ typedef struct queue {
 } queue;
 		
 int dequeue(queue*thisQ) {
-
 	// Insert Code Here
 
 
@@ -127,5 +127,5 @@ int dequeue(queue*thisQ) {
 
 
 
-}`, "problem_topic":"Linked Lists", "problem_name":"Fall 2020 Part A Question 2", "problem_summary":"Suppose we have a queue implemented as a doubly linked list using the structures shown below.  Use head for the front of the queue and tail for the end of the queue.\n\nstruct node {\n\tint data;\n\tstruct node* next, *prev;\n}\n\nstruct queue {\n\tint size;\n\tstruct node *head, *tail;\n}\n\nWrite a dequeue function for this queue. If the queue is NULL or is already empty, return 0 and take no other action. If the queue isn't empty, dequeue the appropriate value, make the necessary adjustments, and return the dequeued value. (Note: You must free the node that previously stored the dequeued value.)"})
+}`, "problem_topic": "Linked Lists", "problem_name": "Fall 2020 Part A Question 2", "problem_summary": "Suppose we have a queue implemented as a doubly linked list using the structures shown below.  Use head for the front of the queue and tail for the end of the queue.\n\nstruct node {\n\tint data;\n\tstruct node* next, *prev;\n}\n\nstruct queue {\n\tint size;\n\tstruct node *head, *tail;\n}\n\nWrite a dequeue function for this queue. If the queue is NULL or is already empty, return 0 and take no other action. If the queue isn't empty, dequeue the appropriate value, make the necessary adjustments, and return the dequeued value. (Note: You must free the node that previously stored the dequeued value.)"})
 }

@@ -11,4 +11,7 @@ int main(void) {
     printf("Failed Test Case: When queue is empty return 0\n");
     return 1;
   }
+
+  printf("Success!");
+  return 0;
 }

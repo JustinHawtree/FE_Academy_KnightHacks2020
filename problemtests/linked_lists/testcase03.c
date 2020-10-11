@@ -26,4 +26,7 @@ int main(void) {
     printf("Failed Test Case: Queue size did not get decreased by one, expected size: %d, current size: %d\n", 4,  q->size);
     return 1;
   }
+
+  printf("Success!");
+  return 0;
 }
