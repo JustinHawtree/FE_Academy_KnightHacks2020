@@ -34,7 +34,7 @@ int dequeue (queue *thisQ) {
 
   free(temp);
 
-  thisQ->size--;
+  //thisQ->size--;
 
   return retval;
 }

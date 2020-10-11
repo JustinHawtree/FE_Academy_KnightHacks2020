@@ -4,31 +4,26 @@
 
 
 int main(void) {
-  int array[10] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
-  queue* q = createQueue(array, 10);
-  node* head =  q->head;
-  while (head != NULL) {
-    printf("%d\n", head->data);
-    if (head->next == NULL)
-      break;
-    head = head->next;
-  }
-  printf("\n");
-  while (head != NULL) {
-    printf("%d\n", head->data);
-    head = head->prev;
+  int array[5] = {5, 4, 3, 2, 1};
+  queue* q = createQueue(array, 5);
+  int result = dequeue(q);
+  if (result != 5) {
+    printf("Failed Test Case: Return value should be the value of the head dequeued\n");
+    return 1;
   }
 
-  printf("\n");
-  int dequeuedVal = dequeue(q);
-  printf("Dequeued: %d\n", dequeuedVal);
-  printf("\n");
-  
-  head =  q->head;
-  while (head != NULL) {
-    printf("%d\n", head->data);
-    if (head->next == NULL)
-      break;
-    head = head->next;
+  if (q->head == NULL || q->head->data != 4) {
+    printf("Failed Test Case: Head did not get moved over\n");
+    return 1;
+  }
+
+  if (q->head->prev != NULL) {
+    printf("Failed Test Case: Head Previous is not NULL\n");
+    return 1;
+  }
+
+  if (q->size != 4) {
+    printf("Failed Test Case: Queue size did not get decreased by one, expected size: %d, current size: %d\n", 4,  q->size);
+    return 1;
   }
 }
