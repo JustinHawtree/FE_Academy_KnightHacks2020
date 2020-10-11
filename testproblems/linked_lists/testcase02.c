@@ -4,7 +4,7 @@
 
 
 int main(void) {
-  // Testing for NULL queue
+  // Testing for empty queue
   queue* q = createQueue(NULL, 0);
   int nullResult = dequeue(q);
   if (nullResult != 0) {

@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+int testy(void) {
+  return NULL;
+}
+
 int main(void){
   int num = 5;
   int num2 = 6;
@@ -8,5 +13,6 @@ int main(void){
   for(i=0; i < 10; i++) {
     printf("Tom\n");
   }
-    return 0;
+  printf("Number is: %d", testy());
+  return 0;
 }

@@ -57,7 +57,7 @@ func RunCode(c *fiber.Ctx) error {
 	}
 	//log.Println(userCode.Input)
 
-	f, fileErr := os.Create("./testproblems/linked_lists/user.c")
+	f, fileErr := os.Create("./testproblems/linked_lists/testuser.c")
 	if fileErr != nil {
 		return c.Status(500).SendString(fileErr.Error())
 	}
@@ -84,7 +84,7 @@ func RunCode(c *fiber.Ctx) error {
 		if err.Error() == "exit status 1" {
 			errOutput = buf.String()
 			if strings.Contains(errOutput, "Segmentation fault") {
-				errOutput = "Segmentation Fault: You likely forgot to check for NULL"
+				errOutput = "Segmentation Fault: You might have forgot to check for NULL"
 			}
 		} else {
 			log.Println("Timed out?")

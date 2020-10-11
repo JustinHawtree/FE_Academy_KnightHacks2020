@@ -1,4 +1,0 @@
-user.c: In function ‘dequeue’:
-user.c:32:3: error: expected expression before ‘else’
-   else
-   ^~~~
