@@ -57,7 +57,7 @@ func RunCode(c *fiber.Ctx) error {
 	}
 	//log.Println(userCode.Input)
 
-	f, fileErr := os.Create("./testproblems/linked_lists/testuser.c")
+	f, fileErr := os.Create("./testproblems/linked_lists/user.c")
 	if fileErr != nil {
 		return c.Status(500).SendString(fileErr.Error())
 	}

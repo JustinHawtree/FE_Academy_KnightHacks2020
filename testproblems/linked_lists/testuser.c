@@ -1,14 +1,26 @@
-
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 
-int main(void){
-  int i;
-  int sum = 0;
-  for(i=0; i < 100; i++) {
-    sum += i;
- printf("SUM: %d\n", sum);
-  }
-  
-	return 0;
+typedef struct node {
+	int data;
+	struct node* next, *prev;
+} node;
+		 
+typedef struct queue {
+	int size;
+	struct node *head, *tail;
+} queue;
+		
+int dequeue(queue* thisQ) {
+	// Insert Code Here
+
+
+
+
+
+
+
+
+
+
 }
