@@ -119,7 +119,7 @@ typedef struct queue {
 	struct node *head, *tail;
 } queue;
 		
-int dequeue(queue*thisQ) {
+int dequeue(queue* thisQ) {
 	// Insert Code Here
 
 
