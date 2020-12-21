@@ -1,0 +1,6 @@
+testing.c: In function ‘main’:
+testing.c:10:22: error: ‘su’ undeclared (first use in this function); did you mean ‘sum’?
+  printf("SUM: %d\n", su);
+                      ^~
+                      sum
+testing.c:10:22: note: each undeclared identifier is reported only once for each function it appears in

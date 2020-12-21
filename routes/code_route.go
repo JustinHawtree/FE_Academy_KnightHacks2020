@@ -10,5 +10,6 @@ func CodeRoutes() {
 	codeRoute := app.App.Group("/code")
 
 	codeRoute.Post("", controller.RunCode)
+	codeRoute.Post("/simple", controller.SimpleCode)
 	codeRoute.Get("", controller.GetCode)
 }
